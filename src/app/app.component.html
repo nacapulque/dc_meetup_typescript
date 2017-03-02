@@ -1,0 +1,156 @@
+<h1>
+  Lista de tareas
+</h1>
+<!--Paso 1,2-->
+<table class="table table-responsive">
+    <thead>
+      <tr>
+        <th>Titulo</th>
+        <th>Fecha de creación</th>
+        <th>Fecha de finalización</th>
+        <th>Responable</th>
+        <th>Estatus</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let todo of todoList">
+        <td>{{todo.title}}</td>
+        <td>{{todo.createdDate.getFullYear()}} - {{todo.createdDate.getMonth()}} - {{todo.createdDate.getDate()}} </td>
+        <td>{{todo.endDate.getFullYear()}} - {{todo.endDate.getMonth()}} - {{todo.endDate.getDate()}} </td>
+        <td>{{todo.responsable}}</td>
+        <td>{{todo.status}}</td>
+      </tr>
+    </tbody>
+  </table>
+<!--paso 1,2-->
+
+<!--Paso 3 -->
+<!--<table class="table table-responsive">
+    <thead>
+      <tr>
+        <th>Titulo</th>
+        <th>Fecha de creación</th>
+        <th>Fecha de finalización</th>
+        <th>Responable</th>
+        <th>Estatus</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let todo of todoList">
+        <td>{{todo.title}}</td>
+        <td>{{todo.formatedDate('createdDate')}}</td>
+        <td>{{todo.formatedDate('endDate')}}</td>
+        <td>{{todo.responsable}}</td>
+        <td>{{todo.status}}</td>
+      </tr>
+    </tbody>
+  </table>-->
+<!--Paso 3 -->
+
+<!--Paso 4 -->
+<!--<table class="table table-responsive" *ngIf="!edit">
+    <thead>
+      <tr>
+        <th>Titulo</th>
+        <th>Fecha de creación</th>
+        <th>Fecha de finalización</th>
+        <th>Responable</th>
+        <th>Estatus</th>
+        <th>Editar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let todo of todoList;let idx = index">
+        <td>{{todo.title}}</td>
+        <td>{{todo.formatedDate('createdDate')}}</td>
+        <td>{{todo.formatedDate('endDate')}}</td>
+        <td>{{todo.responsable}}</td>
+        <td>{{todo.status}}</td>
+        <td (click)="editTodo(todo,idx)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="col-md-4">
+  <form *ngIf="edit">
+		<label for="title">Titulo: {{editable.title}}</label>
+		<input class="form-control" id="title" [(ngModel)]="editable.title" name="title" required/>
+		<label for="create">Fecha de creación:</label>
+		<span> Actual: {{editable.formatedDate('createdDate')}}</span>
+		<input class="form-control" type="text"  [(ngModel)]="createdDay" name="create">
+		<label for="create">Fecha de finalización:</label>
+		<span> Actual: {{editable.formatedDate('endDate')}}</span>
+		<input class="form-control" type="text"  [(ngModel)]="endDay" name="create">
+		<label for="resp">Responsable:</label>
+		<input class="form-control" id="resp" [(ngModel)]="editable.responsable" name="resp" required/>
+		<label for="status">Estatus:</label>
+		<input class="form-control" id="status" [(ngModel)]="editable.status" name="status" required/>
+		<button class="btn btn-info" (click)="updateTodo(editable)">Aceptar</button>
+	</form>
+</div>-->
+<!--Paso 4 -->
+
+<!-- Paso 5-->
+<div class="checkbox">
+  <label><input type="checkbox" [checked]="filterArgs.activated" (change)="filterArgs.activated = !filterArgs.activated" />Filtrar</label>
+</div>
+<div class="radio" *ngIf="filterArgs.activated">
+	<label><input type="radio" name="category" [(ngModel)]="filterArgs.param" [value]="'completada'"required>Completadas</label>
+	<label><input type="radio" name="category" [(ngModel)]="filterArgs.param" [value]="'pendiente'"required>Pendientes</label>
+</div>
+<table class="table table-responsive" *ngIf="!edit">
+    <thead>
+      <tr>
+        <th>Titulo</th>
+        <th>Fecha de creación</th>
+        <th>Fecha de finalización</th>
+        <th>Responable</th>
+        <th>Estatus</th>
+        <th>Editar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let todo of todoList | statusFilter:filterArgs;let idx = index" [ngClass]="{'success':todo.status == 'completada'}">
+        <td>{{todo.title}}</td>
+        <td>{{todo.formatedDate('createdDate')}}</td>
+        <td>{{todo.formatedDate('endDate')}}</td>
+        <td>{{todo.responsable}}</td>
+        <td>{{todo.status}}</td>
+        <td (click)="editTodo(todo,idx)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="col-md-4">
+  <form *ngIf="edit">
+		<label for="title">Titulo: {{editable.title}}</label>
+		<input class="form-control" id="title" [(ngModel)]="editable.title" name="title" required/>
+		<label for="create">Fecha de creación:</label>
+		<span> Actual: {{editable.formatedDate('createdDate')}}</span>
+		<input class="form-control" type="text"  [(ngModel)]="createdDay" name="create">
+		<label for="create">Fecha de finalización:</label>
+		<span> Actual: {{editable.formatedDate('endDate')}}</span>
+		<input class="form-control" type="text"  [(ngModel)]="endDay" name="create">
+		<label for="resp">Responsable:</label>
+		<input class="form-control" id="resp" [(ngModel)]="editable.responsable" name="resp" required/>
+		<label for="status">Estatus:</label>
+		<input class="form-control" id="status" [(ngModel)]="editable.status" name="status" required/>
+		<button class="btn btn-info" (click)="updateTodo(editable)">Aceptar</button>
+	</form>
+</div>
+
+<!-- Paso 5-->
+
+<h4>Realizar:</h4>
+<ul>
+  <li>
+    Filtro por usuario
+  </li>
+  <li>
+    Boton para agregar todo
+  </li>
+  <li>
+    Boton para eliminar todo
+  </li>
+  <li>
+    Aplicar otro clase en base a un nuevo estado
+  </li>
+</ul>
